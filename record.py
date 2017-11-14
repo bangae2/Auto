@@ -1,4 +1,5 @@
 from pynput import mouse, keyboard
+import os
 
 class MyException(Exception): pass
 
@@ -7,7 +8,7 @@ class record :
     global str
     def __init__(self, parent):
         self.parent = parent
-        self.fo = open("C:/result.txt", "w")
+        self.fo = open("/result.txt", "w")
         with keyboard.Listener(
                 on_press=self.on_press) as k:
             with mouse.Listener(
@@ -36,6 +37,9 @@ class record :
     def start(self):
         self.k.start()
         self.m.start()
+
+
+
     def on_press(self,key):
         try:
             print(format(key.char))
@@ -45,12 +49,12 @@ class record :
                 self.fo.close()
                 self.k.stop()
                 self.m.stop()
-                fi = open("C:/result.txt", "r")
+                fi = open("/result.txt", "r")
                 with fi:
                     data = fi.read()
                 fi.close()
-                self.parent.child_input(data)
-
+                os.remove("/result.txt")
+                self.parent.data = data
             # print('special key {0} pressed'.format(
             #     key))
 
