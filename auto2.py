@@ -1,4 +1,5 @@
 from tkinter import *
+import record as auto_record
 
 class MyGui :
     def __init__(self, master):
@@ -24,7 +25,9 @@ class MyGui :
         editMenu = Menu(menubar, tearoff=0)
         editMenu.add_command(label="Play", command=lambda:self.auto_play(None), accelerator="Ctrl+F1")
         editMenu.add_command(label="Pause", command=lambda:self.auto_pause(None), accelerator="Ctrl+F2")
-        editMenu.add_command(label="POS", command=lambda:self.position(None), accelerator="F3")
+        editMenu.add_command(label="POS", command=lambda: self.position(None), accelerator="F2")
+        editMenu.add_command(label="REC", command=lambda: self.rec(None), accelerator="F3")
+        editMenu.add_command(label="REC_STOP", accelerator="F4")
         menubar.add_cascade(label="Edit", menu=editMenu)
 
         self.master.config(menu=menubar)
@@ -32,7 +35,8 @@ class MyGui :
         self.master.bind('<Control-o>', self.open_file)
         self.master.bind('<Control-F1>', self.auto_play)
         self.master.bind('<Control-F2>', self.auto_pause)
-        self.master.bind('<F3>', self.position)
+        self.master.bind('<F2>', self.position)
+        self.master.bind('<F3>', self.rec)
 
     def content(self):
 
@@ -42,6 +46,7 @@ class MyGui :
         self.line.grid(row=0, column=0, rowspan=6, sticky='E', pady=10, padx=(10, 0))
         self.sc.config(command=self.line.yview)
         self.line.config(yscrollcommand=self.sc.set)
+        self.line.insert(END, 0.5)
 
         self.l1 = Label(root, text="X : 0    Y: 0", width=20, anchor="center")
         self.l1.grid(row=0, column=2, columnspan = 4, padx=5)
@@ -105,6 +110,15 @@ class MyGui :
 
     def insert(self):
         print('click me')
+
+    def rec(self, evnet=None):
+        auto_rec = auto_record.record(self)
+
+    def child_input(self, msg):
+        self.input()
+    def input(self):
+        print('1')
+
 root = Tk()
 my_gui = MyGui(root)
 
