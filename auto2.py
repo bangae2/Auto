@@ -1,7 +1,11 @@
 from tkinter import *
 import record as auto_record
+from tkinter import messagebox
+
+
 
 class MyGui :
+    global this
     def __init__(self, master):
         self.master = master
         master.title("A simple GUI")
@@ -113,11 +117,17 @@ class MyGui :
 
     def rec(self, evnet=None):
         auto_rec = auto_record.record(self)
+        self.record_confirm()
 
-    def child_input(self, msg):
-        self.input()
-    def input(self):
-        print('1')
+    def record_confirm(self):
+        print(1)
+        result = messagebox.askquestion("녹화", "녹화파일을 불러오시겠습니까?")
+        if result:
+            self.line.delete(1.0, END)
+            self.line.insert(END, self.data)
+        else:
+            print('false')
+
 
 root = Tk()
 my_gui = MyGui(root)
